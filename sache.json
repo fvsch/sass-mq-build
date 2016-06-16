@@ -1,0 +1,5 @@
+{
+  "name": "sass-mq-build",
+  "description": "A bit like Custom Media Queries, but in Sass",
+  "tags": ["function", "@media", "media-queries", "custom media queries", "responsive", "rwd"]
+}

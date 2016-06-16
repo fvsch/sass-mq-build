@@ -1,0 +1,78 @@
+// ==================================================
+// mq-build - Simply store media queries in variables
+// ==================================================
+
+/// Should we add parentheses around the returned string?
+$mq-build-wrap: false !default;
+
+/// Remove 1px or 0.01em from max-width values, to avoid collisions
+$mq-build-offset: true !default;
+
+/// Media query builder for min/max-width pixel queries
+/// Can return the media query not wrapped with the first and last
+/// parentheses, so that it can be used like the example below:
+///
+/// @example scss - mq-build function
+///   $mq-desktop: mq-build($minw:1000px);
+///   @media ($mq-desktop) { ... }
+///
+/// @param {number}  $minw - Length value for the min-width media query
+/// @param {number}  $maxw - Length value for the max-width media query
+/// @param {number}  $minh - Length value for the min-height media query
+/// @param {number}  $maxh - Length value for the max-height media query
+/// @param {string|list} $other - Optional custom media queries to add (no parentheses)
+/// @param {boolean} $wrap - Wrap the result in parentheses? (default:$mq-build-wrap)
+/// @returns {string}
+
+@function mq-build(
+    $minw: null, $maxw: null,
+    $minh: null, $maxh: null,
+    $other: null,
+    $wrap: $mq-build-wrap
+) {
+    $values: ();
+    $output: "";
+    @if type-of($minw) == number {
+        $values: append($values, "min-width:" + $minw);
+    }
+    @if type-of($maxw) == number {
+        $values: append($values, "max-width:" + mq-build-remove-offset($maxw));
+    }
+    @if type-of($minh) == number {
+        $values: append($values, "min-height:" + $minh);
+    }
+    @if type-of($maxh) == number {
+        $values: append($values, "max-height:" + mq-build-remove-offset($maxh));
+    }
+    @if $other != null {
+        @each $o in $other {
+            $values: append($values, $o);
+        }
+    }
+    @for $i from 1 through length($values) {
+        @if $i != 1 { $output: $output + ") and ("; }
+        $output: $output + nth($values, $i);
+    }
+    @if $wrap == true {
+        $output: "(" + $output + ")";
+    }
+    @return unquote($output);
+}
+
+/// Remove a small number from a CSS length
+/// @param {number} $value
+/// @returns {number}
+@function mq-build-remove-offset($value) {
+    @if $mq-build-offset == false {
+        @return $value;
+    }
+    $unit: unit($value);
+    $remove: 0;
+    // Trying to remove a bit enough number, depending on how big each
+    // unit is. Ideally we’d use 0.1 for px too, but not sure this would
+    // work perfectly everywhere, so sticking to 1px for now.
+    @if $unit == px { $remove: 1; }
+    @else if index(em rem pc cm in, $unit) != null { $remove: 0.01; }
+    @else if index(mm ex ch pt, $unit) { $remove: 0.1; }
+    @return $value - $remove;
+}

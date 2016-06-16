@@ -1,0 +1,8 @@
+{
+  "name": "sass-mq-build",
+  "description": "A bit like Custom Media Queries, but in Sass",
+  "version": "1.0.0",
+  "files": [
+    "_mq-build.scss"
+  ]
+}

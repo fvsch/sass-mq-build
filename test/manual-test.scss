@@ -1,0 +1,53 @@
+/// Basic tests for mq-build
+/// For now we’re running this test manually using http://www.sassmeister.com/
+/// but at some point we’ll try to run it automatically using node-sass.
+
+@import "../mq-build";
+
+// Single value: dimensions
+
+$minw-px: mq-build($minw:1000px);
+$minw-pt: mq-build($minw:1000pt);
+$maxw-px: mq-build($maxw:1000px);
+$maxw-em: mq-build($maxw:50em);
+$maxw-pt: mq-build($maxw:1000pt);
+$maxh-pc: mq-build($maxh:40pc);
+$maxh-mm: mq-build($maxh:1mm);
+
+@media ($minw-px) { .minw-px {content:quote($minw-px)} }
+@media ($minw-pt) { .minw-pt {content:quote($minw-pt)} }
+@media ($maxw-px) { .maxw-px {content:quote($maxw-px)} }
+@media ($maxw-em) { .maxw-em {content:quote($maxw-em)} }
+@media ($maxw-pt) { .maxw-pt {content:quote($maxw-pt)} }
+@media ($maxh-pc) { .maxh-pc {content:quote($maxh-pc)} }
+@media ($maxh-mm) { .maxh-mm {content:quote($maxh-mm)} }
+
+// Arbitrary queries
+// Probably not very useful in practice, but if the need arises…
+
+$other-single: mq-build($other: "orientation:portrait");
+$other-list: mq-build($other: "grid" "update-frequency:slow" "min-resolution:2dppx");
+
+@media ($other-single) { .other-single {content:quote($other-single)} }
+@media ($other-list) { .other-list {content:quote($other-list)} }
+
+// Several values: dimensions
+
+$width-minmax: mq-build(314.15px, 100.01em);
+// Not the recommended syntax, used name parameters instead
+$height-wat: mq-build(null, null, 60em, 50em);
+
+@media ($width-minmax) { .width-minmax {content:quote($width-minmax)} }
+@media ($height-wat) { .height-wat {content:quote($height-wat)} }
+
+// Everything
+
+$full-query: mq-build(1000px, 1100px, 20em, 50em, "a" "b" "c");
+@media ($full-query) { .full-query {content:quote($full-query)} }
+
+// Wrapped query
+
+$wrapped: mq-build(10px, 100px, $wrap:true);
+// Wrapped queries need the string interpolation syntax
+// (parentheses will result in a syntax error).
+@media #{$wrapped} { .wrapped {content:quote($wrapped)} }

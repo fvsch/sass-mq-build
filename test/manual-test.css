@@ -1,0 +1,79 @@
+/* See manual-test.scss */
+
+@media (min-width: 1000px) {
+  .minw-px {
+    content: "min-width:1000px";
+  }
+}
+
+@media (min-width: 1000pt) {
+  .minw-pt {
+    content: "min-width:1000pt";
+  }
+}
+
+@media (max-width: 999px) {
+  .maxw-px {
+    content: "max-width:999px";
+  }
+}
+
+@media (max-width: 49.99em) {
+  .maxw-em {
+    content: "max-width:49.99em";
+  }
+}
+
+@media (max-width: 999.9pt) {
+  .maxw-pt {
+    content: "max-width:999.9pt";
+  }
+}
+
+@media (max-height: 39.99pc) {
+  .maxh-pc {
+    content: "max-height:39.99pc";
+  }
+}
+
+@media (max-height: 0.9mm) {
+  .maxh-mm {
+    content: "max-height:0.9mm";
+  }
+}
+
+@media (orientation: portrait) {
+  .more-single {
+    content: "orientation:portrait";
+  }
+}
+
+@media (grid) and (update-frequency: slow) and (min-resolution: 2dppx) {
+  .more-list {
+    content: "grid) and (update-frequency:slow) and (min-resolution:2dppx";
+  }
+}
+
+@media (min-width: 314.15px) and (max-width: 100em) {
+  .width-minmax {
+    content: "min-width:314.15px) and (max-width:100em";
+  }
+}
+
+@media (min-height: 60em) and (max-height: 49.99em) {
+  .height-wat {
+    content: "min-height:60em) and (max-height:49.99em";
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1099px) and (min-height: 20em) and (max-height: 49.99em) and (a) and (b) and (c) {
+  .full-query {
+    content: "min-width:1000px) and (max-width:1099px) and (min-height:20em) and (max-height:49.99em) and (a) and (b) and (c";
+  }
+}
+
+@media (min-width: 10px) and (max-width: 99px) {
+  .wrapped {
+    content: "(min-width:10px) and (max-width:99px)";
+  }
+}
