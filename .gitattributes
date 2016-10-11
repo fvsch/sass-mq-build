@@ -1,0 +1,4 @@
+.gitattributes export-ignore
+package.json export-ignore
+sache.json export-ignore
+test export-ignore
